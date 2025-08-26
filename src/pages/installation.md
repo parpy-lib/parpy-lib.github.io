@@ -1,0 +1,112 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Installing ParPy
+
+This page covers how to install ParPy and configure its various backends to run the test suite.
+
+## Pre-Installation Steps
+
+These installation instructions assume [Conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) has been installed and set up on your system. We provide Conda environments that include all dependencies needed to enable ParPy.
+
+To enable executing the generated GPU code for your backend, you may need to perform additional setup steps.
+
+:::info
+When using a system lacking the required hardware to run either backend, you can still install ParPy. However, in this case, ParPy can only be used to generate the low-level code (as a string) without the ability to execute it.
+:::
+
+### CUDA
+
+CUDA requires an NVIDIA GPU with CUDA-compatible GPU drivers installed. To install the CUDA toolkit and CUDA drivers, follow the instructions [here](https://developer.nvidia.com/cuda-toolkit-archive).
+
+Our provided Conda environment requires at least CUDA 12.2 to run all benchmarks.
+
+### Metal
+
+To enable Metal, you have to install the XCode command-line tools:
+```bash
+xcode-select install
+```
+
+Further, you need to download the [Metal-cpp](https://developer.apple.com/metal/cpp/) header library for your macOS version. Finally, after downloading the files, you must set the environment variable `METAL_CPP_HEADER_PATH` to the path of the `metal-cpp` directory.
+
+:::info
+To find which version of macOS you are using, run
+```bash
+sw_vers
+```
+:::
+
+## Installation
+
+Clone the ParPy repository to a suitable location on your system and enter the root directory:
+```bash
+git clone https://github.com/parpy-lib/ParPy.git
+cd ParPy
+```
+
+We provide three Conda environments in the `benchmarks` directory: a minimal installation, including the minimum requirements to install the ParPy compiler, and environments for the CUDA and Metal backends including dependencies for running benchmarks. The environments include the installation of supported versions of Python and Rust.
+
+:::info Install Environment
+<Tabs>
+<TabItem value="parpy-install-minimal" label="Minimal" default>
+
+Install the minimal Conda environment, including dependencies required to install and run ParPy, by running
+```bash
+conda env create -f benchmarks/minimal-env.yml
+```
+
+</TabItem>
+<TabItem value="parpy-install-cuda" label="CUDA">
+
+Install the Conda environment including dependencies required to run all CUDA benchmarks by running
+```bash
+conda env create -f benchmarks/cuda-env.yml
+```
+
+</TabItem>
+<TabItem value="parpy-install-metal" label="Metal">
+
+Install the Conda environment including dependencies required to run all Metal benchmarks by running
+```bash
+conda env create -f benchmarks/metal-env.yml
+```
+
+</TabItem>
+</Tabs>
+:::
+
+After setting up the environment, run
+```bash
+conda activate parpy-env
+```
+to activate the Conda environment. To exit the environment, run `conda deactivate`. The remaining setup is performed within the Conda environment.
+
+Install ParPy from the root directory by running
+```bash
+pip install .
+```
+
+## Running Tests
+
+ParPy includes both unit tests, which test small components of the native Rust compiler, and integration tests, that test actual use of the ParPy compiler from Python. Assuming we are in the root of the ParPy repository, and the ParPy package has been installed, we run the unit tests as
+```bash
+cargo test
+```
+
+The integration tests, which are found in the `test` directory, are run by using
+```bash
+pytest
+```
+
+Regardless of whether you successfully configured a backend or not, many integration tests will be skipped. This happens because many tests require a particular backend to be enabled.
+
+:::info Metal Backend Warnings
+
+The integration tests will produce a warning if Metal appears to be available on the system, but it has not been correctly configured. This happens when the `METAL_CPP_HEADER_PATH` environment variable has not been set.
+
+:::
+
+## Examples
+
+See the [Documentation](/docs) for examples of how to use ParPy and documentation of the exposed ParPy API.
