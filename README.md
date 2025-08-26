@@ -1,6 +1,6 @@
 # ParPy Website
 
-This repository contains the source code for the ParPy website (TODO).
+This repository contains the source code for the [ParPy website](https://parpy-lib.github.io/).
 
 The `master` branch contains the source code for the official ParPy website. The website is deployed through the `gh-pages` branch. Hence, we should only commit changes to the `master`branch.
 
