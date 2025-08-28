@@ -85,7 +85,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/parpy/',
+                href: 'https://github.com/parpy-lib/',
               },
             ],
           },

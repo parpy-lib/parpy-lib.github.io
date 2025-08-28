@@ -24,7 +24,7 @@ import parpy
 def sum_rows(x, y, N):
     parpy.label('outer')
     for i in range(N):
-        out[i] = parpy.sum(x[i,:])
+        out[i] = parpy.operators.sum(x[i,:])
 ```
 
 We allocate randomized problem data using NumPy:
