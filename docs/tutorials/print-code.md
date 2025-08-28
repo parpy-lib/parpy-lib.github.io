@@ -2,11 +2,11 @@
 sidebar_position: 2
 ---
 
-# Printing Generated Code
+# Printing generated code
 
 In this tutorial, use the example of row-wise summation from the previous tutorial. However, instead of calling the decorated functions, we use explicit APIs exposed by ParPy to generate low-level code and later execute it. The code shown in this example is found at `examples/print.py` in the ParPy repository.
 
-## Row-Wise Summation
+## Row-wise summation
 
 In the previous tutorial ([Basic Parallelization](./basic-parallelization.md)), we considered an annotated implementation of row-wise summation in ParPy. Below, we present the annotated version of the `row_sums` function, the allocation of test data using NumPy, and the declaration of a parallel specification.
 
@@ -74,7 +74,7 @@ fn(x, y, N)
 assert np.allclose(y, np.sum(x, axis=1), atol=1e-3)
 ```
 
-## Specialization and API Differences
+## Specialization and API differences
 
 As the ParPy compiler runs just-in-time (JIT), the values of all parameters passed to a function are available when it runs. The ParPy compiler will automatically specialize the generated code based on the shape of argument arrays (with a non-empty shape), and on the values of scalar parameters (e.g., floats and ints). As a result, the compiler produces more efficient code, but it may have to run many times due to variations in argument sizes.
 

@@ -2,13 +2,13 @@
 sidebar_position: 3
 ---
 
-# External Functions
+# External functions
 
 In this tutorial, we consider two use-cases of external functions to work around limitations in ParPy. For simplicity, we focus on the CUDA backend, as it has support for user-defined externals in GPU code.
 
 The support for external functions in ParPy is limited and depends on the backend and where the external is intended to be used (CPU or GPU). Note also that the externals interface is under development, and may change drastically in the future.
 
-## Popcount Function
+## Popcount function
 
 Assume we want to compute the number of set bits in a 32-bit integer (often referred to as [popcount](https://en.wikipedia.org/wiki/Popcount)). In Python code, we could use the `bit_count()` method of integers to compute this efficiently (for non-negative numbers):
 ```python
@@ -70,7 +70,7 @@ popcount_many(x, count, N, opts=opts)
 
 A complete version of this example can be found at `examples/external.py` in the ParPy repository.
 
-## Custom Warp Summation
+## Custom warp summation
 
 To achieve peak performance, an advanced user may sometimes need to write manual code. The previous example showed how we can use existing functions from the standard library. However, what if we want to perform an operation that involves multiple threads, such as a parallel reduction? In this example, we implement a custom warp summation in CUDA, which uses different intrinsics depending on the capabilities of the target GPU (while ParPy currently uses the most general alternative). Below, we present the CUDA C++ implementation of such a function. For simplicity, this function assumes we are summing exactly 32 values (the size of a warp).
 ```cpp

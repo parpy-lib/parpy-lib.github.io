@@ -2,11 +2,11 @@
 sidebar_position: 1
 ---
 
-# Basic Parallelization
+# Basic parallelization
 
 In this tutorial, we consider a simple Python function and how we can parallelize it to run in parallel on the GPU. The code shown in this example is found at `examples/hello.py` in the ParPy repository.
 
-## Row-Wise Summation
+## Row-wise summation
 
 Assume we have an implementation of row-wise summation in Python that we want to parallelize:
 ```python
