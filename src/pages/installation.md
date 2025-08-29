@@ -45,7 +45,7 @@ git clone https://github.com/parpy-lib/ParPy.git
 cd ParPy
 ```
 
-We provide three Conda environments in the `benchmarks` directory: a minimal installation, including the minimum requirements to install the ParPy compiler, and environments for the CUDA and Metal backends including dependencies for running benchmarks. The environments include the installation of supported versions of Python and Rust.
+We provide three Conda environments in the `benchmarks` directory: a minimal installation, including the minimum requirements to be able to install the ParPy compiler and run tests, and environments for the CUDA and Metal backends including dependencies needed to run benchmarks. The environments include supported versions of Python and Rust.
 
 :::info Install Environment
 <Tabs>
@@ -80,16 +80,14 @@ After setting up the environment, run
 ```bash
 conda activate parpy-env
 ```
-to activate the Conda environment. To exit the environment, run `conda deactivate`. The remaining setup is performed within the Conda environment.
-
-Install ParPy from the root directory by running
+to activate the Conda environment. To exit the environment, run `conda deactivate`. Within the environment, install ParPy from the root directory by running
 ```bash
 pip install .
 ```
 
 ## Running Tests
 
-ParPy includes both unit tests, which test small components of the native Rust compiler, and integration tests, that test actual use of the ParPy compiler from Python. Assuming we are in the root of the ParPy repository, and the ParPy package has been installed, we run the unit tests as
+ParPy includes both unit tests, which test small components of the native Rust compiler, and integration tests that use the ParPy library. From the root of the ParPy repository, given that the ParPy package has been installed, we run the unit tests as
 ```bash
 cargo test
 ```
@@ -99,11 +97,15 @@ The integration tests, which are found in the `test` directory, are run by using
 pytest
 ```
 
-Regardless of whether you successfully configured a backend or not, many integration tests will be skipped. This happens because many tests require a particular backend to be enabled.
+:::info Skipped Tests
+
+Many integration tests will be skipped regardless of which backend is enabled. This is because many integration tests execute the generated code from the ParPy compiler.
+
+:::
 
 :::info Metal Backend Warnings
 
-The integration tests will produce a warning if Metal appears to be available on the system, but it has not been correctly configured. This happens when the `METAL_CPP_HEADER_PATH` environment variable has not been set.
+The integration tests will produce a warning if Metal appears to be available on the system, but it is not enabled. This happens when the `METAL_CPP_HEADER_PATH` environment variable has not been set.
 
 :::
 
