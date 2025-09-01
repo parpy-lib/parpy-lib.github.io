@@ -10,7 +10,16 @@ This module exposes the key functionality of ParPy needed to parallelize functio
 
 ### jit(Function) -> Function
 
-The `jit` decorated is used on a Python function that is to be JIT-compiled. Initially, the decorated function is parsed and translated to an intermediate representation, and a wrapper function is returned in place of the original decorated function. When the wrapper function is called, the intermediate representation of the original function is just-in-time (JIT) compiled based on the shapes and types of the provided arguments.
+The `jit` function is typically used as a decorator on a Python function to be just-in-time (JIT) compiled. For example,
+```python
+import parpy
+@parpy.jit
+def sum_values(x, y):
+    ...
+```
+decorates the function `sum_values`. As a result, the decorated function is parsed and translated to an intermediate representation, such that a wrapper function is returned in place of the original Python function. When we call the `sum_values` function, this wrapper function runs instead. It performs a JIT-compilation based on the shapes and types of the provided arguments before executing the generated native code.
+
+Note that this wrapper function performs caching to avoid having to repeatedly JIT-compile a function.
 
 ### external(ext_name: string, backend: CompileBackend, target: Target, header: string, parallelize: LoopPar)(Function) -> Function
 
