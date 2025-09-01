@@ -10,6 +10,22 @@ sidebar_position: 3
 
 Synchronizes the CPU with the device of the selected `backend`. This function waits until all GPU kernels on the target device complete.
 
+### empty(shape: Tuple[int], dtype: parpy.ElemSize, backend: parpy.CompileBackend) -> Buffer
+
+Produces an empty `Buffer` with the specified shape `shape` containing values of data type `dtype`. The data is allocated on the backend selected using the `backend` argument.
+
+### empty_like(b: Buffer) -> Buffer
+
+Produces an empty `Buffer` of the same shape, data type, and backend as the provided buffer `b`.
+
+### zeros(shape: Tuple[int], dtype: parpy.ElemSize, backend: parpy.CompileBackend) -> Buffer
+
+Allocates a buffer in a similar vein to the `empty` function and sets all memory to zero.
+
+### zeros_like(b: Buffer) -> Buffer
+
+Allocates a buffer in a similar vein to the `empty_like` function and sets all memory to zero.
+
 ## Classes
 
 ### Buffer
@@ -25,6 +41,10 @@ Attempts to convert the provided array `t` to a Buffer of the selected backend u
 #### numpy(self) -> numpy.ndarray
 
 Converts the buffer to a NumPy array. Depending on the buffer backend, this may result in copying data from the GPU to the CPU, and the allocation of a new buffer for the resulting NumPy array.
+
+#### torch_ref(self) -> torch.tensor
+
+Attempts to construct a PyTorch tensor referencing the data stored in the buffer. If the buffer backend is CUDA, this function produces a PyTorch tensor reusing the same data (this may be valuable for performance). Otherwise, it produces a new tensor containing a copy of the data in the original buffer.
 
 #### reshape(self, \*dims) -> Buffer
 

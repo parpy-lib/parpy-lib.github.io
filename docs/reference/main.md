@@ -58,10 +58,6 @@ Returns a `LoopPar` object with its `reduce` field set to `True`.
 
 Returns the default `CompileOptions` object with parallel execution enabled based on the provided parallel specification `p`.
 
-### seq
-
-Returns the default `CompileOptions` object with sequential execution enabled.
-
 ### clear_cache
 
 Clears the cached shared library files as well as the runtime cache of functions.
@@ -87,12 +83,6 @@ This structure contains options used to control different aspects of the compile
 #### parallelize : Dict[string, LoopPar]
 
 Defines the parallel specification, which defines a mapping from labels to their parallelization. This is automatically set when using the `seq` and `par` functions. By default, it is set to an empty dictionary.
-
-#### seq : bool
-
-When enabled, JIT-compilation is disabled. Instead, the called function is executed sequentially using the Python interpreter. This option can be used for debugging (for instance, it is frequently used in the integration tests), but may not always work as there is not a one-to-one mapping between parallel and sequential code.
-
-By default, this flag is set to `False`.
 
 #### verbose_backend_resolution : bool
 
@@ -187,6 +177,24 @@ for i in range(N):
 Returns a new `LoopPar` enforcing that the resulting code uses the specified number of threads per block. By default, the compiler uses `1024` threads per block. When overridden to any other value, this is accepted instead.
 
 Note that using `LoopPar`s with conflicting (non-default) numbers of threads per block in a single parallel loop nest will result in an compiler error.
+
+### ElemSize
+
+Represents the element size of an array in ParPy. The following values are supported by the ParPy compiler:
+- `Bool`
+- `I8`
+- `I16`
+- `I32`
+- `I64`
+- `U8`
+- `U16`
+- `U32`
+- `U64`
+- `F16`
+- `F32`
+- `F64`
+
+These types correspond to booleans (`Bool`), signed integers (`I8`, `I16`, `I32`, and `I64`), unsigned integers (`U8`, `U16`, `U32`, and `U64), and floating-point numbers (`F16`, `F32`, and `F64`).
 
 ### Target
 

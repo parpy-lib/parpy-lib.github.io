@@ -8,28 +8,10 @@ This module provides attributes and functions used to represent types. These can
 
 ## Functions
 
-### pointer(ty: parpy.ExtType) -> ExtType
+### pointer(ty: parpy.ElemSize) -> parpy.ExtType
 
-Constructs a pointer type based on the given type `ty`, which must be a scalar type (nested pointers are not allowed).
-
-## Types
-
-### ElemSize
-
-Represents the element size of an array in ParPy. The following values are supported by the ParPy compiler:
-- `Bool`
-- `I8`
-- `I16`
-- `I32`
-- `I64`
-- `U8`
-- `U16`
-- `U32`
-- `U64`
-- `F16`
-- `F32`
-- `F64`
+Constructs a pointer type based on the given type `ty`, which must be an `ElemSize` type. This produces a distinct type to prevent the construction of nested pointer types.
 
 ## Type Attributes
 
-The module provides a pre-defined list of external type attributes of type `ExtType`, named according to the values provided in the `ElemSize` type.
+The module provides a pre-defined list of external type attributes based on the `ElemSize` type.
