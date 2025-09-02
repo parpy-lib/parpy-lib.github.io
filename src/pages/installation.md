@@ -9,7 +9,7 @@ This page covers how to install ParPy and configure its various backends to run 
 
 These installation instructions assume [Conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) has been installed and set up on your system. We provide Conda environments that include all dependencies needed to enable ParPy.
 
-To enable executing the generated GPU code for your backend, you may need to perform additional setup steps.
+To enable executing the generated GPU code, you may need to perform additional setup steps, depending on the target backend.
 
 :::info
 When using a system lacking the required hardware to run either backend, you can still install ParPy. However, in this case, ParPy can only be used to generate the low-level code (as a string) without the ability to execute it.
@@ -19,22 +19,22 @@ When using a system lacking the required hardware to run either backend, you can
 
 CUDA requires an NVIDIA GPU with CUDA-compatible GPU drivers installed. To install the CUDA toolkit and CUDA drivers, follow the instructions [here](https://developer.nvidia.com/cuda-toolkit-archive).
 
-Our provided Conda environment requires at least CUDA 12.2 to run all benchmarks.
+Our provided Conda environment assumes drivers supporting at least CUDA 12.2 are installed. This is required to be able to run all benchmarks.
 
 ### Metal
 
-To enable Metal, you have to install the XCode command-line tools:
+The Metal backend requires Apple Silicon hardware running on macOS. In addition, the XCode command-line tools must be installed:
 ```bash
 xcode-select install
 ```
 
-Further, you need to download the [Metal-cpp](https://developer.apple.com/metal/cpp/) header library for your macOS version. Finally, after downloading the files, you must set the environment variable `METAL_CPP_HEADER_PATH` to the path of the `metal-cpp` directory.
+In addition, the [Metal C++](https://developer.apple.com/metal/cpp/) header library must be installed for the correct macOS version. After downloading the files, the `METAL_CPP_HEADER_PATH` environment variable must be set to the path of the `metal-cpp` directory. For instance, if the `metal-cpp` directory is located at `/Users/user/Documents`, you can set the environment variable by running:
+```bash
+export METAL_CPP_HEADER_PATH=/Users/user/Documents/metal-cpp
+```
 
 :::info
-To find which version of macOS you are using, run
-```bash
-sw_vers
-```
+Run the `sw_vers --productVersion` command to show the installed macOS version.
 :::
 
 ## Installation
