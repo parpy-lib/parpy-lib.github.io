@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # Printing generated code
@@ -8,7 +8,7 @@ In this tutorial, use the example of row-wise summation from the previous tutori
 
 ## Row-wise summation
 
-In the previous tutorial ([Basic Parallelization](/docs/tutorials/basic-parallelization)), we considered an annotated implementation of row-wise summation in ParPy. Below, we present the annotated version of the `row_sums` function, the allocation of test data using NumPy, and the declaration of a parallel specification.
+In the first tutorial ([Basic Parallelization](/docs/tutorials/basic-parallelization)), we considered an annotated implementation of row-wise summation in ParPy. Below, we present the annotated version of the `row_sums` function, the allocation of test data using NumPy, and the declaration of a parallel specification.
 
 ```python
 import parpy
