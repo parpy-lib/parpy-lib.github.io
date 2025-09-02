@@ -111,4 +111,4 @@ The integration tests will produce a warning if Metal appears to be available on
 
 ## Examples
 
-See the [Documentation](/docs) for examples of how to use ParPy and documentation of the exposed ParPy API.
+See the [Documentation](/docs) for examples of how to use ParPy and documentation of the exposed ParPy API. In particular, the tutorial on [printing generated code](/docs/tutorials/print-code) provides an example of how to use ParPy without having to set up any backend.
