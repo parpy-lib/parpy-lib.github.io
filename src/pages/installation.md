@@ -1,11 +1,28 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Installing ParPy
+# Installation
 
 This page covers how to install ParPy and configure its various backends to run the test suite.
 
-## Pre-Installation Steps
+## Quick install
+
+To install ParPy, run the following commands:
+```bash
+git clone https://github.com/parpy-lib/ParPy.git
+cd ParPy
+conda env create -f benchmarks/minimal-env.yml
+conda activate parpy-env
+pip install .
+```
+
+Below, we provide more detailed installation instructions, including:
+- The pre-installation steps required to install ParPy and to enable a GPU backend ([Pre-installation steps](#pre-installation-steps)).
+- Detailed installation instructions for ParPy, with alternative Conda environments for running benchmarks ([Installing ParPy](#installing-parpy)).
+- How to run the test suite after installing ParPy ([Running tests](#running-tests)).
+- Where to find documentation on how to use it, including examples ([More information](#more-information)).
+
+## Pre-installation steps
 
 These installation instructions assume [Conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) has been installed and set up on your system. We provide Conda environments that include all dependencies needed to enable ParPy.
 
@@ -37,7 +54,7 @@ export METAL_CPP_HEADER_PATH=/Users/user/Documents/metal-cpp
 Run the `sw_vers --productVersion` command to show the installed macOS version.
 :::
 
-## Installation
+## Installing ParPy
 
 Clone the ParPy repository to a suitable location on your system and enter the root directory:
 ```bash
@@ -109,6 +126,6 @@ The integration tests will produce a warning if Metal appears to be available on
 
 :::
 
-## Examples
+## More information
 
 See the [Documentation](/docs) for examples of how to use ParPy and documentation of the exposed ParPy API. In particular, the tutorial on [printing generated code](/docs/tutorials/print-code) provides an example of how to use ParPy without having to set up any backend.
