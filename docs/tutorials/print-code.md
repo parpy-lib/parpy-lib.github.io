@@ -8,7 +8,7 @@ In this tutorial, use the example of row-wise summation from the previous tutori
 
 ## Row-wise summation
 
-In the previous tutorial ([Basic Parallelization](./basic-parallelization.md)), we considered an annotated implementation of row-wise summation in ParPy. Below, we present the annotated version of the `row_sums` function, the allocation of test data using NumPy, and the declaration of a parallel specification.
+In the previous tutorial ([Basic Parallelization](/docs/tutorials/basic-parallelization)), we considered an annotated implementation of row-wise summation in ParPy. Below, we present the annotated version of the `row_sums` function, the allocation of test data using NumPy, and the declaration of a parallel specification.
 
 ```python
 import parpy
@@ -32,10 +32,10 @@ opts = parpy.par(p)
 
 For the sake of this tutorial, we assume we do not want to immediately execute the parallelized function. For instance, we may want to delay execution because we want to:
 
-- Validate that our parallelization strategy produces the expected low-level code.
+- Validate that a given parallelization strategy results in the expected low-level code.
 - Test the code generation on a system where the selected target backend is unavailable.
-- Manually modify the generated code (e.g., to use efficient features not available by default using the ParPy compiler).
-- Avoid the overhead introduced by the caching mechanism used when calling a parallelized function.
+- Be able to manually modify the generated code (e.g., to use features not accessible from Python).
+- Minimize the overhead of a function call
 
 The ParPy API exposes the `print_compiled` function for JIT-compiling a function, given a list of the arguments to be passed to the function and the compiler options. The result is a string which we can print to standard output (e.g., for debugging) or store in a file (e.g., to manually modify the generated code). For instance, to compile and print the generated code for the CUDA backend:
 ```python
@@ -54,7 +54,7 @@ print(code)
 print("=====")
 ```
 
-Assume the generated code for a function is not behaving as we expect it to. Printing it using the `print_compiled` function can help in certain cases, but it may be more helpful to manually modify the generated code (e.g., by adding custom prints inside a CUDA kernel). Given that the generated code is stored as a string in the `code` variable, we could enable this modification by writing to a file and reading back after a delay:
+Assume the generated code for a function is not behaving as we expect it to. Printing it using the `print_compiled` function can help in certain cases, but it may be more helpful to manually modify the generated code (e.g., by adding custom prints inside a CUDA kernel). Given that the generated code is stored as a string in the `code` variable, we can enable modifying it at runtime by writing the code to a file and reading back after a delay:
 ```python
 with open("out.txt", "w+") as f:
     f.write(code)
@@ -65,14 +65,18 @@ with open("out.txt", "r") as f:
     code = f.read()
 ```
 
-In this snippet, we first write the generated low-level code to a new file `out.txt`. Then, we use the `input` function in Python to wait until the user presses enter. Before pressing enter, the user is able to modify the generated code stored in the `out.txt` before it is read back into the `code` variable. At this stage we could, for instance, insert debug prints in the generated code to help us figure out what the issue is.
+In this code snippet, we write the generated low-level code to a new file `out.txt`. Then, we use the `input` function in Python to wait until the user presses enter. Before pressing enter, the user modifies the generated code stored in the `out.txt` before it is read back into the `code` variable. The user could, for instance, insert debug prints in the generated code for debugging or just to help understand what the code is doing.
 
-After updating the code, we use the `compile_string` function from the ParPy API to compile code provided in a string to executable code. Specifically, the `compile_string` function expects the name of the function, the code to compile, and the compiler options. The result is a wrapper function to the underlying JIT-compiled code. Importantly, this function does not expect the compiler options, as these were already provided in the call to `compile_string`. For instance, we can compile the generated code for the `sum_rows` function as:
+### Compiling and running the modified code
+
+The ParPy compiler can generate code for any backend regardless of whether it is supported or not. However, to actually compile and run the code, a backend must be enabled (see the [installation instructions](/installation)). The following Python code compiles the modified low-level code in `code` and runs it:
 ```python
 fn = parpy.compile_string("sum_rows", code, opts)
 fn(x, y, N)
 assert np.allclose(y, np.sum(x, axis=1), atol=1e-3)
 ```
+
+The `compile_string` function compiles the low-level code and produces a wrapper function. We pass the name of the function in the generated code (`sum_rows`), the code to compile (`code`), and the compiler options (`opts`). The resulting wrapper function (stored in `fn`) can be used to immediately invoke the underlying JIT-compiled code. Importantly, `fn` does not expect the compiler options, as these were already provided in the call to `compile_string`.
 
 ## Specialization and API differences
 
