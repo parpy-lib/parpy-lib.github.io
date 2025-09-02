@@ -4,7 +4,7 @@ The reference provides a documentation of the Python API exposed by the ParPy pa
 
 ## Overview
 
-The PyPar API consists of the following documented modules:
+The ParPy API consists of the following documented modules:
 - [pypar](/docs/reference/main.md): the main module, containing the key functionality needed to parallelize functions
 - [pypar.backend](/docs/reference/backend.md): functionality related to the backends
 - [pypar.buffer](/docs/reference/buffer.md): a custom buffer type in ParPy used internally to reduce memory movement
