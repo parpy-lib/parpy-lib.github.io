@@ -26,6 +26,10 @@ Allocates a buffer in a similar vein to the `empty` function and sets all memory
 
 Allocates a buffer in a similar vein to the `empty_like` function and sets all memory to zero.
 
+#### from_array(t, backend) -> Buffer
+
+Converts the provided array `t` to a Buffer of the selected backend using the [array interface protocol](https://numpy.org/doc/stable/reference/arrays.interface.html) or the [CUDA array interface](https://numba.readthedocs.io/en/stable/cuda/cuda_array_interface.html). If `backend` is set to `None`, the Buffer is constructed only to guide code generation and its pointer should not be used.
+
 ## Classes
 
 ### Buffer
@@ -33,10 +37,6 @@ Allocates a buffer in a similar vein to the `empty_like` function and sets all m
 #### sync(self)
 
 Synchronizes the contents of this buffer with the device, by delaying execution until all GPU kernels complete.
-
-#### from_array(t, backend) -> Buffer
-
-Attempts to convert the provided array `t` to a Buffer of the selected backend using the [array interface protocol](https://numpy.org/doc/stable/reference/arrays.interface.html). If `backend` is set to `None`, the Buffer is constructed only for the purpose of aiding code generation and may contain an invalid pointer.
 
 #### numpy(self) -> numpy.ndarray
 

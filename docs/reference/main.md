@@ -205,6 +205,22 @@ Represents the element size of an array in ParPy. The following values are suppo
 
 These types correspond to booleans (`Bool`), signed integers (`I8`, `I16`, `I32`, and `I64`), unsigned integers (`U8`, `U16`, `U32`, and `U64), and floating-point numbers (`F16`, `F32`, and `F64`).
 
+#### size(self) -> int
+
+Returns the size of the `ElemSize` enum in bytes.
+
+#### to_numpy(self)
+
+Converts the `ElemSize` enum to a corresponding NumPy data type. For instance, the `I32` value is converted to an instance of the `numpy.int32` class.
+
+#### to_torch(self) -> torch.dtype
+
+Converts the `ElemSize` enum to a corresponding PyTorch data type. For instance, the `I32` value is converted to the `torch.int32` value. Note that PyTorch does not support types corresponding to `U16`, `U32`, and `U64`. Therefore, the function will fail when attempting to convert to these types.
+
+#### to_ctype(self)
+
+Converts the `ElemSize` enum to a corresponding [ctypes](https://docs.python.org/3/library/ctypes.html) class. For instance, the `I32` value is converted to the `ctypes.c_int32` type. These types are used to declare argument types when calling the generated low-level code.
+
 ### Target
 
 An enum used in the declaration of an external function, to indicate the intended target at which the external should run. Contains two values: `Target.Host` and `Target.Device`.
