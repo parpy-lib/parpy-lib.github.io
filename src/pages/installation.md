@@ -16,11 +16,16 @@ conda activate parpy-env
 pip install .
 ```
 
-Below, we provide more detailed installation instructions, including:
+To verify that the installation works, run the compiler tests as shown below. Note that the latter command takes a few minutes to run.
+```bash
+cargo test
+pytest
+```
+
+Next up is the tutorial on [Basic parallelization](/docs/tutorials/basic-parallelization) in ParPy for a brief introduction. Below, we provide detailed installation instructions, including:
 - The pre-installation steps required to install ParPy and to enable a GPU backend ([Pre-installation steps](#pre-installation-steps)).
 - Detailed installation instructions for ParPy, with alternative Conda environments for running benchmarks ([Installing ParPy](#installing-parpy)).
-- How to run the test suite after installing ParPy ([Running tests](#running-tests)).
-- Where to find documentation on how to use it, including examples ([More information](#more-information)).
+- More details on the test suite and what the commands provided above do ([Running tests](#running-tests)).
 
 ## Pre-installation steps
 
@@ -36,7 +41,7 @@ When using a system lacking the required hardware to run either backend, you can
 
 CUDA requires an NVIDIA GPU with CUDA-compatible GPU drivers installed. To install the CUDA toolkit and CUDA drivers, follow the instructions [here](https://developer.nvidia.com/cuda-toolkit-archive).
 
-Our provided Conda environment assumes drivers supporting at least CUDA 12.2 are installed. This is required to be able to run all benchmarks.
+Our provided Conda environment assumes drivers supporting at least CUDA 12.2 are installed. This is required to be able to run all benchmarks. Further, ParPy assumes the `nvcc` command is included in the PATH.
 
 ### Metal
 
@@ -64,43 +69,42 @@ cd ParPy
 
 We provide three Conda environments in the `benchmarks` directory: a minimal installation, including the minimum requirements to be able to install the ParPy compiler and run tests, and environments for the CUDA and Metal backends including dependencies needed to run benchmarks. The environments include supported versions of Python and Rust.
 
-:::info Install Environment
+:::info Set up environment and install ParPy
 <Tabs>
 <TabItem value="parpy-install-minimal" label="Minimal" default>
 
-Install the minimal Conda environment, including dependencies required to install and run ParPy, by running
+Install and activate the minimal Conda environment, including dependencies required to install and run ParPy:
 ```bash
 conda env create -f benchmarks/minimal-env.yml
+conda activate parpy-env
+pip install .
 ```
 
 </TabItem>
 <TabItem value="parpy-install-cuda" label="CUDA">
 
-Install the Conda environment including dependencies required to run all CUDA benchmarks by running
+Install and activate a Conda environment including dependencies required to run all CUDA benchmarks:
 ```bash
 conda env create -f benchmarks/cuda-env.yml
+conda activate cuda-parpy-env
+pip install .
 ```
 
 </TabItem>
 <TabItem value="parpy-install-metal" label="Metal">
 
-Install the Conda environment including dependencies required to run all Metal benchmarks by running
+Install and activate a Conda environment including dependencies required to run all Metal benchmarks:
 ```bash
 conda env create -f benchmarks/metal-env.yml
+conda activate metal-parpy-env
+pip install .
 ```
 
 </TabItem>
 </Tabs>
 :::
 
-After setting up the environment, run
-```bash
-conda activate parpy-env
-```
-to activate the Conda environment. To exit the environment, run `conda deactivate`. Within the environment, install ParPy from the root directory by running
-```bash
-pip install .
-```
+To exit the Conda environment, run `conda deactivate`.
 
 ## Running Tests
 
@@ -125,7 +129,3 @@ Many integration tests will be skipped regardless of which backend is enabled. T
 The integration tests will produce a warning if Metal appears to be available on the system, but it is not enabled. This happens when the `METAL_CPP_HEADER_PATH` environment variable has not been set.
 
 :::
-
-## More information
-
-See the [Documentation](/docs) for examples of how to use ParPy and documentation of the exposed ParPy API. In particular, the tutorial on [printing generated code](/docs/tutorials/print-code) provides an example of how to use ParPy without having to set up any backend.
