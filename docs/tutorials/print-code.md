@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Printing generated code
 
-In this tutorial, use the example of row-wise summation from the previous tutorial. However, instead of calling the decorated functions, we use explicit APIs exposed by ParPy to generate low-level code and later execute it. The code shown in this example is found at `examples/print.py` in the ParPy repository.
+In this tutorial, use the example of row-wise summation from the previous tutorial. However, instead of calling the decorated functions, we use explicit APIs exposed by ParPy to generate low-level code and later execute it. The code shown in this example is found at `examples/print.py` in the ParPy repository. From the root of the repository, run the example using `python examples/print.py`.
 
 ## Row-wise summation
 
