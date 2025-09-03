@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Basic parallelization
 
-In this tutorial, we consider a simple Python function and how we can parallelize it to run in parallel on the GPU. The code shown in this example is found at `examples/hello.py` in the ParPy repository.
+In this tutorial, we consider a simple Python function and how we can parallelize it to run in parallel on the GPU. The code shown in this example is found at `examples/hello.py` in the ParPy repository. Run it using `python examples/hello.py` from the root directory.
 
 ## Row-wise summation
 
@@ -47,6 +47,7 @@ Assuming either the CUDA or Metal backends have been properly set up, we can now
 ```python
 sum_rows(x, y, N, opts=opts)
 assert np.allclose(y, np.sum(x, axis=1), atol=1e-3)
+print("Test OK")
 ```
 
 The compiler options `opts` include a parallel specification, but also includes other options related to the code generation, such as which backend to use. By default, the compiler automatically determines which backend to use.
